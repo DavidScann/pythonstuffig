@@ -14,11 +14,18 @@
 import os
 import sys
 
+def format_tags(tag_list):
+    # Replace underscores with spaces
+    tag_list = [tag.replace('_', ' ') for tag in tag_list]
+
+    # Join the items in the list with a comma separator
+    return ', '.join(tag_list)
+
 # Check if the user provided a folder path as a command line argument
 if len(sys.argv) < 2:
     # Print instructions on how to use the script
     print("Please provide a folder path as a command line argument to process .txt and .caption files in the specified folder.")
-    print("Usage: python tag_reformatter.py /path/to/folder/")
+    print("Usage: python tag_formatter.py /path/to/folder/")
 else:
     # Get the folder path from the command line argument
     folder_path = sys.argv[1]
@@ -34,8 +41,8 @@ else:
                 # Read the contents of the file into a list
                 items = [line.strip() for line in file]
 
-            # Join the items in the list with a comma separator
-            output = ', '.join(items)
+            # Format the tags
+            output = format_tags(items)
 
             # Overwrite the file with the output
             with open(file_path, 'w') as file:
