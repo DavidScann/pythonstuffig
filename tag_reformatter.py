@@ -21,6 +21,20 @@ def format_tags(tag_list):
     # Join the items in the list with a comma separator
     return ', '.join(tag_list)
 
+def update_file(file_path):
+    # Format the tags
+    with open(file_path, 'r') as file:
+        items = [line.strip() for line in file]
+    output = format_tags(items)
+
+    # Overwrite the file with the output
+    with open(file_path, 'w') as file:
+        file.write(output)
+
+    # Print a message indicating that the file was updated
+    file_name = os.path.basename(file_path)
+    print(f"{file_name} has been updated")
+
 # Check if the user provided a folder path as a command line argument
 if len(sys.argv) < 2:
     # Print instructions on how to use the script
@@ -36,14 +50,5 @@ else:
             # Construct the full file path
             file_path = os.path.join(folder_path, filename)
 
-            # Open the file
-            with open(file_path, 'r') as file:
-                # Read the contents of the file into a list
-                items = [line.strip() for line in file]
-
-            # Format the tags
-            output = format_tags(items)
-
-            # Overwrite the file with the output
-            with open(file_path, 'w') as file:
-                file.write(output)
+            # Update the file and print a message
+            update_file(file_path)
